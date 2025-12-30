@@ -1,6 +1,6 @@
 <template>
   <nav-bar />
-  <h1>This is the Welcome Screen</h1>
+  <router-view />
 </template>
 
 <script setup>
