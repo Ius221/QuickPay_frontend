@@ -1,38 +1,148 @@
-# QuickPay_Frontend
+# 💸 QuickPay – Virtual Wallet Web Application
 
-This template should help get you started developing with Vue 3 in Vite.
+QuickPay is a lightweight virtual banking web application focused on **speed, simplicity, and smooth user experience**.
+The goal is simple: *everything should be quick* — account creation, money transfer, deposits, withdrawals, and transaction tracking.
 
-## Recommended IDE Setup
+---
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 🚀 What is QuickPay?
 
-## Recommended Browser Setup
+QuickPay allows users to:
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+* Create an account
+* Receive an initial **₹500 wallet balance**
+* Transfer money to other QuickPay users
+* Deposit and withdraw money instantly
+* View complete transaction history (self + transfers)
 
-## Customize configuration
+Think of it as a **mini digital bank**, built for learning full-stack concepts with real-world flows.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+---
 
-## Project Setup
+## 🧠 Core Features
 
-```sh
+* 🔐 **User Account System**
+
+  * Create and manage personal accounts
+  * Secure wallet linked to each user
+
+* 💼 **Wallet Management**
+
+  * Initial wallet balance of **₹500**
+  * Real-time balance updates
+
+* 💸 **Instant Money Transfer**
+
+  * Transfer funds to friends who are already QuickPay users
+  * Fast and seamless experience
+
+* 🏦 **Deposit & Withdraw**
+
+  * Add or remove money from wallet instantly
+
+* 📊 **Transaction History**
+
+  * View all transactions:
+
+    * Deposits
+    * Withdrawals
+    * Sent money
+    * Received money
+
+---
+
+## 🎯 Project Motivation
+
+The motive behind QuickPay is **speed and simplicity**.
+
+No complex steps.
+No unnecessary clicks.
+Just quick actions and instant results.
+
+Perfect for:
+
+* Learning full-stack workflows
+* Understanding wallet-based systems
+* Practicing real-world transaction logic
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+* **Vue 3**
+* **Vue Router**
+* **Bun** (for fast package management & development)
+
+### Backend
+
+* **Spring Boot (Java)**
+* **RESTful APIs**
+* **JWT-based Authentication**
+* *Handles:*
+  * User management
+  * Wallet operations
+  * Money transfers
+  * Transaction history
+
+
+### Database
+
+* **MySQL**
+* *Relational schema to ensure:*
+  * Data consistency
+  * Secure transaction handling
+  * Proper user–wallet mapping
+
+---
+
+## 📂 Project Structure (Frontend)
+
+```
+quickpay/
+│── src/
+│   ├── components/
+│   ├── views/
+│   ├── router/
+│   ├── assets/
+│   └── main.js
+│
+│── public/
+│── package.json
+│── bun.lockb
+│── README.md
+```
+
+---
+
+## ⚙️ Setup Instructions
+
+```bash
+# Install dependencies
 bun install
+
+# Run development server
+bun run dev
 ```
 
-### Compile and Hot-Reload for Development
+---
 
-```sh
-bun dev
-```
+## 🔮 Future Enhancements
 
-### Compile and Minify for Production
+* 🔐 Authentication & authorization
+* 📱 Mobile-first UI
+* 🧾 Downloadable transaction statements
+* 🔔 Real-time notifications
+* 🛡️ Better validation & security layers
 
-```sh
-bun run build
-```
+---
+
+## 📌 Conclusion
+
+QuickPay is a **fast, minimal, and practical virtual banking app** designed to simulate real-world money transactions while keeping everything *quick and clean*.
+
+If banking apps were built by devs who hate loading screens — this would be it 🚀
+
+---
+
