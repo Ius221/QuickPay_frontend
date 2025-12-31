@@ -14,7 +14,7 @@
     </div>
     <BtnSlot>
       <template #login> Login </template>
-      <template #signup> Sign up </template>
+      <template #signup> Sign up &rarr;</template>
     </BtnSlot>
   </GlassBox>
 </template>
