@@ -25,8 +25,8 @@
         />
       </div>
       <div class="button-container">
-        <button type="submit" class="btn btn-login">Submit</button>
-        <router-link to="/signup" class="btn btn-signup"> Signup &rarr;</router-link>
+        <router-link to="/signup" class="btn btn-login"> Signup &rarr;</router-link>
+        <button type="submit" class="btn btn-signup">Submit</button>
       </div>
     </form>
   </GlassBox>
@@ -40,8 +40,21 @@ import HeadingSlot from '../Ui/HeadingSlot.vue'
 let username = ref(null)
 let pass = ref(null)
 
-const formSubmit = () => {
-  console.log(username.value, pass.value)
+const formSubmit = async () => {
+  if (!username.value || !pass.value) return
+  await fetch('http://localhost:8080/api/v1/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({
+      username: username.value,
+      password: pass.value,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
 }
 </script>
 

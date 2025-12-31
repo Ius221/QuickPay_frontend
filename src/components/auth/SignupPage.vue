@@ -13,7 +13,7 @@
           required
         />
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="email">Email<span>*</span></label>
         <input
           type="email"
@@ -23,7 +23,7 @@
           v-model="email"
           required
         />
-      </div>
+      </div> -->
       <div class="form-group">
         <label for="password">Password<span>*</span></label>
         <input
@@ -37,7 +37,7 @@
       </div>
 
       <div class="button-container">
-        <router-link to="/login" class="btn btn-login"> Login </router-link>
+        <router-link to="/login" class="btn btn-login">&larr; Login </router-link>
         <button type="submit" class="btn btn-signup">Submit</button>
       </div>
     </form>
@@ -51,10 +51,27 @@ import HeadingSlot from '../Ui/HeadingSlot.vue'
 
 let username = ref(null)
 let pass = ref(null)
-let email = ref(null)
 
-const formSubmit = () => {
-  console.log(username.value, pass.value, email.value)
+const formSubmit = async () => {
+  if (!username.value || !pass.value) alert('Add Values!!!')
+  await fetch('http://localhost:8080/api/v1/auth/signup', {
+    method: 'POST',
+    body: JSON.stringify({ username: username.value, password: pass.value }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      username.value = ''
+      pass.value = ''
+      console.log(res)
+    })
+    .catch((err) => {
+      username.value == ''
+      pass.value == ''
+      console.log(err)
+    })
 }
 </script>
 
