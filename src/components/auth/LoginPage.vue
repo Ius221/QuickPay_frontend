@@ -24,7 +24,8 @@
           required
         />
       </div>
-      <div class="button-container">
+      <div class="loader" v-if="isLoading"></div>
+      <div class="button-container" v-else>
         <router-link to="/signup" class="btn btn-login"> Signup &rarr;</router-link>
         <button type="submit" class="btn btn-signup">Submit</button>
       </div>
@@ -39,8 +40,10 @@ import HeadingSlot from '../Ui/HeadingSlot.vue'
 
 let username = ref(null)
 let pass = ref(null)
+let isLoading = ref(false)
 
 const formSubmit = async () => {
+  isLoading.value = true
   if (!username.value || !pass.value) return
   await fetch('http://localhost:8080/api/v1/auth/login', {
     method: 'POST',
@@ -53,8 +56,20 @@ const formSubmit = async () => {
     },
   })
     .then((res) => res.json())
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+    .then((res) => {
+      clearRecord()
+      console.log(res)
+    })
+    .catch((err) => {
+      clearRecord()
+      console.log(err)
+    })
+}
+
+const clearRecord = () => {
+  isLoading.value = false
+  username.value = ''
+  pass.value = ''
 }
 </script>
 
@@ -93,7 +108,6 @@ span {
   width: 100%;
   padding: 14px 18px;
   font-size: 2rem;
-  font-family: 'Roboto Flex', sans-serif;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -101,6 +115,8 @@ span {
   color: #f1f7f6;
   outline: none;
   transition: all 0.3s ease;
+  letter-spacing: 2px;
+  font-family: inherit;
 }
 
 .form-group input::placeholder {
@@ -170,6 +186,28 @@ span {
 a {
   text-decoration: none;
   text-align: center;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #25b09b;
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: l3 1s infinite linear;
+  margin: 10px auto;
+  margin-top: 50px;
+}
+@keyframes l3 {
+  to {
+    transform: rotate(1turn);
+  }
 }
 @media (max-width: 768px) {
   .button-container {
