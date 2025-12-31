@@ -12,10 +12,10 @@
         <img :src="fastMoney" alt="fastMoney" />
       </div>
     </div>
-    <div class="button-container">
-      <LoginSlot />
-      <SignupSlot />
-    </div>
+    <BtnSlot>
+      <template #login> Login </template>
+      <template #signup> Sign up </template>
+    </BtnSlot>
   </GlassBox>
 </template>
 
@@ -23,8 +23,7 @@
 import fastMoney from '@/components/assets/fastMoney.png'
 import GlassBox from '../Ui/GlassSlot.vue'
 import HeadingSlot from '../Ui/HeadingSlot.vue'
-import LoginSlot from '../Ui/LoginSlot.vue'
-import SignupSlot from '../Ui/SignupSlot.vue'
+import BtnSlot from '../Ui/BtnSlot.vue'
 </script>
 
 <style scoped>
