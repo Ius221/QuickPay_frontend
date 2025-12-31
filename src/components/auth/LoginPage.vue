@@ -3,7 +3,7 @@
     <HeadingSlot class="heading"> Login Here </HeadingSlot>
     <form class="login-form" method="POST" @submit.prevent="formSubmit">
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="username">Username<span>*</span></label>
         <input
           type="text"
           id="username"
@@ -14,7 +14,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">Password<span>*</span></label>
         <input
           type="password"
           id="password"
@@ -26,7 +26,7 @@
       </div>
       <div class="button-container">
         <button type="submit" class="btn btn-login">Submit</button>
-        <router-link to="/signup" class="btn btn-signup"> Signup </router-link>
+        <router-link to="/signup" class="btn btn-signup"> Signup &rarr;</router-link>
       </div>
     </form>
   </GlassBox>
@@ -50,6 +50,11 @@ const formSubmit = () => {
   font-size: 5.6rem;
   text-decoration: rgba(170, 170, 170, 0.5) underline 1px;
   text-underline-offset: 6px;
+}
+span {
+  color: rgb(255, 50, 0);
+  font-size: 22px;
+  margin-left: 4px;
 }
 .login-form {
   margin-top: 5rem;
