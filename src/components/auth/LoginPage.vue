@@ -1,7 +1,7 @@
 <template>
-  <GlassBox style="width: 60%;">
+  <GlassBox style="width: 60%">
     <HeadingSlot class="heading"> Login Here </HeadingSlot>
-    <form class="login-form">
+    <form class="login-form" method="POST" @submit.prevent="formSubmit">
       <div class="form-group">
         <label for="username">Username</label>
         <input
@@ -9,6 +9,7 @@
           id="username"
           name="username"
           placeholder="Enter your username"
+          v-model="username"
           required
         />
       </div>
@@ -19,16 +20,29 @@
           id="password"
           name="password"
           placeholder="Enter your password"
+          v-model="pass"
           required
         />
+      </div>
+      <div class="button-container">
+        <button type="submit" class="btn btn-login">Submit</button>
+        <router-link to="/signup" class="btn btn-signup"> Signup </router-link>
       </div>
     </form>
   </GlassBox>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import GlassBox from '../Ui/GlassSlot.vue'
 import HeadingSlot from '../Ui/HeadingSlot.vue'
+
+let username = ref(null)
+let pass = ref(null)
+
+const formSubmit = () => {
+  console.log(username.value, pass.value)
+}
 </script>
 
 <style scoped>
@@ -79,5 +93,73 @@ import HeadingSlot from '../Ui/HeadingSlot.vue'
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(40, 98, 58, 0.6);
   box-shadow: 0 0 0 3px rgba(40, 98, 58, 0.2);
+}
+
+.button-container {
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+  margin-top: 6rem;
+}
+.btn {
+  flex: 1;
+  max-width: 220px;
+  padding: 15px 40px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Roboto Flex', sans-serif;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.btn-login {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  font-size: 2.4rem;
+  font-weight: 200;
+  color: #ccc;
+}
+
+.btn-login:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+.btn-signup {
+  background: linear-gradient(135deg, #28623a, #005240);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  font-size: 2.4rem;
+  font-weight: 200;
+  color: #ccc;
+}
+
+.btn-signup:hover {
+  background: linear-gradient(135deg, #2f7043, #00614d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(40, 98, 58, 0.5);
+  color: #fff;
+}
+a {
+  text-decoration: none;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .button-container {
+    flex-direction: column;
+  }
+
+  .btn {
+    max-width: 100%;
+  }
 }
 </style>
