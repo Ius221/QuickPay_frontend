@@ -1,10 +1,21 @@
 <template>
-  <router-link to="/signup" class="btn btn-signup">
-    <slot>Signup </slot>
-  </router-link>
+  <div class="button-container">
+    <router-link to="/login" class="btn btn-login">
+      <slot name="login">Login</slot>
+    </router-link>
+    <router-link to="/signup" class="btn btn-signup">
+      <slot name="signup">Sign up</slot>
+    </router-link>
+  </div>
 </template>
 
 <style scoped>
+.button-container {
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+  margin-top: 6rem;
+}
 .btn {
   flex: 1;
   max-width: 220px;
