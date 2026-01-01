@@ -78,7 +78,6 @@ const formSubmit = async () => {
       return res.json()
     })
     .then((res) => {
-      clearRecord()
       console.log(res)
       toast('Account created Successfully', {
         theme: 'auto',
@@ -86,18 +85,22 @@ const formSubmit = async () => {
         autoClose: 3000,
         dangerouslyHTMLString: true,
       })
-      // setTimeout(() => router.replace('/login'), 4000)
+      setTimeout(() => router.replace('/login'), 4000)
     })
     .catch((err) => {
-      clearRecord()
-      console.log(err.message, err.error)
-      toast(err.message || 'Username Repeated', {
+      let msg = ref(null)
+      if (err.error) {
+        console.log(err.error.split(' ').slice(4).join(' '))
+        msg.value = err.error.split(' ').slice(4).join(' ')
+      }
+      toast(err.message || msg, {
         theme: 'auto',
         type: 'error',
-        autoClose: 3000,
+        autoClose: 4000,
         dangerouslyHTMLString: true,
       })
     })
+    .finally(() => clearRecord())
 }
 
 const clearRecord = () => {
@@ -150,6 +153,8 @@ span {
   color: #f1f7f6;
   outline: none;
   transition: all 0.3s ease;
+  letter-spacing: 2px;
+  font-family: inherit;
 }
 
 .form-group input::placeholder {
