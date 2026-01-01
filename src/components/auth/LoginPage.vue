@@ -3,13 +3,13 @@
     <HeadingSlot class="heading"> Login Here </HeadingSlot>
     <form class="login-form" method="POST" @submit.prevent="formSubmit">
       <div class="form-group">
-        <label for="username">Username<span>*</span></label>
+        <label for="email">Email<span>*</span></label>
         <input
           type="text"
-          id="username"
-          name="username"
-          placeholder="Enter your username"
-          v-model="username"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          v-model="email"
           required
         />
       </div>
@@ -39,17 +39,17 @@ import { ref } from 'vue'
 import GlassBox from '../Ui/GlassSlot.vue'
 import HeadingSlot from '../Ui/HeadingSlot.vue'
 
-let username = ref(null)
+let email = ref(null)
 let pass = ref(null)
 let isLoading = ref(false)
 
 const formSubmit = async () => {
   isLoading.value = true
-  if (!username.value || !pass.value) return
+  if (!email.value || !pass.value) return
   await fetch('http://localhost:8080/api/v1/auth/login', {
     method: 'POST',
     body: JSON.stringify({
-      username: username.value,
+      email: email.value,
       password: pass.value,
     }),
     headers: {
@@ -61,10 +61,10 @@ const formSubmit = async () => {
         let err = await res.json()
         throw err
       }
+      return res.json()
     })
     .then((res) => {
       isLoading.value = false
-      clearRecord()
       console.log(res)
     })
     .catch((err) => {
@@ -83,13 +83,13 @@ const formSubmit = async () => {
         autoClose: 3000,
         dangerouslyHTMLString: true,
       })
-      // clearRecord()
     })
+    .finally(() => clearRecord())
 }
 
 const clearRecord = () => {
   isLoading.value = false
-  username.value = ''
+  email.value = ''
   pass.value = ''
 }
 </script>
