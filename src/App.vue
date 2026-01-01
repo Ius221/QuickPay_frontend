@@ -5,9 +5,16 @@
 
 <script setup>
 import NavBar from '@/components/nav/NavBar.vue'
+import 'vue3-toastify/dist/index.css'
 </script>
 
 <style>
+.Toastify__toast-body {
+  font-size: 1.8rem; /* Or 18px, 20px, etc. */
+  font-family: 'Roboto Flex', sans-serif;
+  letter-spacing: 2px;
+  gap: 1rem;
+}
 /* - Font sizes (px)
 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98 */
 * {

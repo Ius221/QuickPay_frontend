@@ -34,6 +34,7 @@
 </template>
 
 <script setup>
+import { toast } from 'vue3-toastify'
 import { ref } from 'vue'
 import GlassBox from '../Ui/GlassSlot.vue'
 import HeadingSlot from '../Ui/HeadingSlot.vue'
@@ -55,14 +56,34 @@ const formSubmit = async () => {
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => res.json())
+    .then(async (res) => {
+      if (!res.ok) {
+        let err = await res.json()
+        throw err
+      }
+    })
     .then((res) => {
+      isLoading.value = false
       clearRecord()
       console.log(res)
     })
     .catch((err) => {
-      clearRecord()
-      console.log(err)
+      isLoading.value = false
+      let msg = ref(null)
+      if (err.error) {
+        console.log(err.error.split(' ').slice(4).join(' '))
+        msg.value =
+          err.error.split(' ').slice(4).join(' ') === 'Bad credentials'
+            ? 'Incorrect Password'
+            : 'No User Found'
+      }
+      toast(err.message || msg, {
+        theme: 'auto',
+        type: 'error',
+        autoClose: 3000,
+        dangerouslyHTMLString: true,
+      })
+      // clearRecord()
     })
 }
 

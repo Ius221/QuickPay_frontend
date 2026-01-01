@@ -45,13 +45,16 @@
 </template>
 
 <script setup>
+import { toast } from 'vue3-toastify'
 import { ref } from 'vue'
 import GlassBox from '../Ui/GlassSlot.vue'
 import HeadingSlot from '../Ui/HeadingSlot.vue'
+import { useRouter } from 'vue-router'
 
 let username = ref(null)
 let pass = ref(null)
 let isLoading = ref(false)
+const router = useRouter()
 
 const formSubmit = async () => {
   isLoading.value = true
@@ -66,14 +69,34 @@ const formSubmit = async () => {
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => res.json())
+    .then(async (res) => {
+      console.log(res)
+      if (!res.ok) {
+        const err = await res.json()
+        throw err
+      }
+      return res.json()
+    })
     .then((res) => {
       clearRecord()
       console.log(res)
+      toast('Account created Successfully', {
+        theme: 'auto',
+        type: 'success',
+        autoClose: 3000,
+        dangerouslyHTMLString: true,
+      })
+      // setTimeout(() => router.replace('/login'), 4000)
     })
     .catch((err) => {
       clearRecord()
-      console.log(err)
+      console.log(err.message, err.error)
+      toast(err.message || 'Username Repeated', {
+        theme: 'auto',
+        type: 'error',
+        autoClose: 3000,
+        dangerouslyHTMLString: true,
+      })
     })
 }
 
@@ -90,6 +113,7 @@ const clearRecord = () => {
   text-decoration: rgba(170, 170, 170, 0.5) underline 1px;
   text-underline-offset: 6px;
 }
+
 .login-form {
   margin-top: 5rem;
   width: 100%;
