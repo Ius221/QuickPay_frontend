@@ -46,16 +46,23 @@
 
 <script setup>
 import { toast } from 'vue3-toastify'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import GlassBox from '../Ui/GlassSlot.vue'
 import HeadingSlot from '../Ui/HeadingSlot.vue'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '../store/UserStore'
 
 let username = ref(null)
 let email = ref(null)
 let pass = ref(null)
 let isLoading = ref(false)
 const router = useRouter()
+const userStore = useUserStore()
+
+onMounted(() => {
+  console.log('User details')
+  console.log(userStore.token)
+})
 
 const formSubmit = async () => {
   isLoading.value = true

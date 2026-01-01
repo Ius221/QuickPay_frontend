@@ -38,10 +38,12 @@ import { toast } from 'vue3-toastify'
 import { ref } from 'vue'
 import GlassBox from '../Ui/GlassSlot.vue'
 import HeadingSlot from '../Ui/HeadingSlot.vue'
+import { useUserStore } from '../store/UserStore'
 
 let email = ref(null)
 let pass = ref(null)
 let isLoading = ref(false)
+const userStore = useUserStore()
 
 const formSubmit = async () => {
   isLoading.value = true
@@ -64,14 +66,14 @@ const formSubmit = async () => {
       return res.json()
     })
     .then((res) => {
-      isLoading.value = false
       console.log(res)
+      isLoading.value = false
+      userStore.setUser(res)
     })
     .catch((err) => {
       isLoading.value = false
       let msg = ref(null)
       if (err.error) {
-        console.log(err.error.split(' ').slice(4).join(' '))
         msg.value =
           err.error.split(' ').slice(4).join(' ') === 'Bad credentials'
             ? 'Incorrect Password'
@@ -86,6 +88,8 @@ const formSubmit = async () => {
     })
     .finally(() => clearRecord())
 }
+
+// const logginUser = async (data) => {}
 
 const clearRecord = () => {
   isLoading.value = false
