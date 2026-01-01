@@ -13,7 +13,7 @@
           required
         />
       </div>
-      <!-- <div class="form-group">
+      <div class="form-group">
         <label for="email">Email<span>*</span></label>
         <input
           type="email"
@@ -23,7 +23,7 @@
           v-model="email"
           required
         />
-      </div> -->
+      </div>
       <div class="form-group">
         <label for="password">Password<span>*</span></label>
         <input
@@ -52,6 +52,7 @@ import HeadingSlot from '../Ui/HeadingSlot.vue'
 import { useRouter } from 'vue-router'
 
 let username = ref(null)
+let email = ref(null)
 let pass = ref(null)
 let isLoading = ref(false)
 const router = useRouter()
@@ -64,6 +65,7 @@ const formSubmit = async () => {
     body: JSON.stringify({
       username: username.value,
       password: pass.value,
+      email: email.value,
     }),
     headers: {
       'Content-Type': 'application/json',
@@ -89,6 +91,7 @@ const formSubmit = async () => {
     })
     .catch((err) => {
       let msg = ref(null)
+      console.log(err)
       if (err.error) {
         console.log(err.error.split(' ').slice(4).join(' '))
         msg.value = err.error.split(' ').slice(4).join(' ')
@@ -106,6 +109,7 @@ const formSubmit = async () => {
 const clearRecord = () => {
   username.value = ''
   pass.value = ''
+  email.value = ''
   isLoading.value = false
 }
 </script>
