@@ -35,3 +35,24 @@ export const useUserStore = defineStore('user', () => {
 }, {
     persist: true
 })
+
+/*
+Your money, your control — all in one place.
+Track balances, transactions, and account activity with ease.
+
+Welcome back to your secure banking dashboard.
+Here’s a clear overview of your account and recent activity.
+
+Your financial details, just the way you need them.
+Clear, secure, and always up to date.
+
+Good to see you again — we’ve got your account ready.
+Take a quick look at your balance and recent activity.
+
+A smarter way to manage your finances.
+Everything you need, right at your fingertips.
+
+
+
+
+*/

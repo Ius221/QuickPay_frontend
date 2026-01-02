@@ -7,7 +7,7 @@
 <style scoped>
 .container {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1400px;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);

@@ -1,5 +1,5 @@
 <template>
-  <GlassBox>
+  <GlassBox style="max-width: 1000px">
     <div class="content-row">
       <div class="left-content">
         <HeadingSlot> Money Moves <br /><span>at Lightning Speed</span> </HeadingSlot>
