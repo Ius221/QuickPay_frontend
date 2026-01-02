@@ -1,17 +1,63 @@
 <template>
-  <h1>quick pay</h1>
+  <div class="main-container">
+    <h2>quick pay</h2>
+    <div class="nav-links">
+      <router-link to="/dashboard">Home</router-link>
+      <router-link to="/wallet">Wallet</router-link>
+      <router-link to="/transfer">Transfer</router-link>
+      <router-link to="/transactions">Transactions</router-link>
+    </div>
+    <button class="logout">Logout</button>
+  </div>
 </template>
 
-<script setup></script>
-
 <style scoped>
-h1 {
-  font-family: 'Alumni Sans Pinstripe', sans-serif;
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+h2 {
   text-transform: uppercase;
-  font-weight: 100;
-  font-size: 6.2rem;
-  letter-spacing: 10px;
-  text-align: center;
-  /* color: #fff; */
+  font-family: 'Alumni Sans Pinstripe', sans-serif;
+  font-size: 4.8rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4.2rem;
+}
+a {
+  font-size: 2.4rem;
+  color: #ccc;
+  opacity: 0.5;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+a:hover {
+  opacity: 0.8;
+}
+
+.active {
+  color: #ccc;
+  opacity: 1 !important;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+.logout {
+  background-color: #f7a1a1;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 1.5rem;
+  font-size: 2rem;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: rgb(51, 51, 51) 4px 4px 6px;
+}
+.logout:hover {
+  background-color: #df9292;
 }
 </style>

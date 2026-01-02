@@ -1,5 +1,5 @@
 <template>
-  <nav-bar />
+  <h1 class="top-header">quick pay</h1>
   <router-view />
 </template>
 
@@ -39,5 +39,14 @@ body {
   background-attachment: fixed; /* optional: cool parallax vibe */
   color: #f1f7f6;
   font-family: 'Roboto Flex', sans-serif;
+}
+.top-header {
+  font-family: 'Alumni Sans Pinstripe', sans-serif;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 6.2rem;
+  letter-spacing: 10px;
+  text-align: center;
+  /* color: #fff; */
 }
 </style>
