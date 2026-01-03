@@ -10,13 +10,13 @@
       <template #others>
         <form @submit.prevent="handleForm" method="post">
           <div class="use-me">
-            <input-slot />
+            <input-slot unique="one" v-model="amount" />
           </div>
           <div class="btn-divivder">
             <DepositbtnSlot
               propName="Withdraw"
               link="/wallet/withdraw"
-              isRout="true"
+              :isRout="true"
               subName="Deposit"
             />
           </div>
@@ -31,6 +31,13 @@
 
 <script setup>
 import deposit from '@/components/assets/deposit.png'
+import { ref } from 'vue'
+
+const amount = ref('')
+
+function handleForm() {
+  console.log(amount.value)
+}
 </script>
 
 <style scoped>

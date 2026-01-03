@@ -10,17 +10,31 @@
       <template #others>
         <form @submit.prevent="handleForm()" method="post">
           <div class="align-me">
-            <InputSlot labelName="Amount" isLabelShown="true" place="10,000" />
-            <InputSlot labelName="Account" isLabelShown="true" place="0000" />
             <InputSlot
+              labelName="Amount"
+              :isLabelShown="true"
+              place="10,000"
+              unique="one"
+              v-model="amount"
+            />
+            <InputSlot
+              labelName="Account"
+              :isLabelShown="true"
+              place="0000"
+              unique="two"
+              v-model="accno"
+            />
+            <InputSlot
+              unique="three"
               place="* * * *"
               labelName="Password"
-              isLabelShown="true"
+              :isLabelShown="true"
               inputType="password"
+              v-model="pass"
             />
           </div>
           <div class="btn-divivder">
-            <DepositbtnSlot subName="Withdraw" isRout="true" noRoute="value" />
+            <DepositbtnSlot subName="Send" :isRout="true" noRoute="value" />
           </div>
         </form>
       </template>
@@ -33,6 +47,15 @@
 
 <script setup>
 import transfer from '@/components/assets/transfer.png'
+import { ref } from 'vue'
+
+const amount = ref('')
+const accno = ref('')
+const pass = ref('')
+
+const handleForm = () => {
+  console.log(amount.value, accno.value, pass.value)
+}
 </script>
 
 <style scoped>

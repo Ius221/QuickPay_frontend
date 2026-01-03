@@ -1,10 +1,12 @@
 <template>
-  <label v-if="isLabelShown">{{ labelName }}:</label>
+  <label v-if="isLabelShown" :for="unique">{{ labelName }}:</label>
 
   <input
     :type="inputType"
     inputmode="numeric"
-    pattern="[0-9]*"
+    :id="unique"
+    :value="modelValue"
+    :pattern="pattern"
     :placeholder="place"
     @input="handleInput"
     required
@@ -12,24 +14,42 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+
 const props = defineProps({
+  modelValue: String,
   place: {
     type: String,
     default: 'Amount',
   },
   inputType: {
     type: String,
-    default: 'text',
-    validator: (value) => ['text', 'password'].includes(value),
+    default: 'number',
+    validator: (value) => ['number', 'text', 'password'].includes(value),
   },
   labelName: String,
   isLabelShown: Boolean,
+
+  unique: {
+    type: String,
+    required: true,
+  },
 })
 
+const emit = defineEmits(['update:modelValue'])
+
+// const inputMode = computed(() => (props.inputType === 'text' ? 'numerice' : undefined))
+
+const pattern = computed(() => (props.inputType === 'text' ? '[0-9]*' : undefined))
+
 function handleInput(e) {
+  let value = e.target.value
+
   if (props.inputType === 'text') {
-    e.target.value = e.target.value.replace(/\D/g, '')
+    value = value.replace(/\D/g, '')
   }
+
+  emit('update:modelValue', value)
 }
 </script>
 
