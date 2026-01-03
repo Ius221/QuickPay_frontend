@@ -53,7 +53,7 @@ input:focus {
   box-shadow: 0 0 0 2px rgba(0, 82, 64, 0.2);
 }
 input::placeholder {
-  color: #9ca3af;
+  color: rgba(204, 204, 204, 0.3);
 }
 label {
   color: rgba(255, 255, 255, 0.7);

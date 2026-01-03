@@ -1,6 +1,8 @@
 <template>
   <button type="submit" v-if="isRout">{{ subName }}</button>
-  <router-link :to="link" :id="isRout ? 'customize-me' : null">{{ propName }}</router-link>
+  <router-link :to="link" :id="isRout ? 'customize-me' : null" v-if="noRoute === null">{{
+    propName
+  }}</router-link>
 </template>
 
 <script setup>
@@ -17,6 +19,10 @@ defineProps({
     type: Boolean,
     require: false,
     default: false,
+  },
+  noRoute: {
+    type: String,
+    default: null,
   },
   subName: {
     type: String,

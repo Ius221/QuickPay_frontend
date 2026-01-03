@@ -7,6 +7,7 @@ import DashboardPage from '@/pages/DashboardPage.vue'
 import ErrorPage from '@/pages/ErrorPage.vue'
 import DepositPage from '@/pages/DepositPage.vue'
 import WithdrawPage from '@/pages/WithdrawPage.vue'
+import TransferPage from '@/pages/TransferPage.vue'
 
 const routes = [
   { path: '/', redirect: '/home' },
@@ -20,6 +21,7 @@ const routes = [
       { path: 'withdraw', component: WithdrawPage },
     ]
   },
+  { path: '/transfer', component: TransferPage },
   { path: '/:err', component: ErrorPage },
 ]
 

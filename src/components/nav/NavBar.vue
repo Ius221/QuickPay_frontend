@@ -3,7 +3,9 @@
     <h2>quick pay</h2>
     <div class="nav-links">
       <router-link to="/dashboard">Home</router-link>
-      <router-link to="/wallet/deposit">Wallet</router-link>
+      <router-link to="/wallet/deposit" :class="{ active: $route.path.startsWith('/wallet') }"
+        >Wallet</router-link
+      >
       <router-link to="/transfer">Transfer</router-link>
       <router-link to="/transactions">Transactions</router-link>
     </div>
