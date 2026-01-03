@@ -10,19 +10,27 @@
       <template #others>
         <form @submit.prevent="handleForm()" method="post">
           <div class="align-me">
-            <InputSlot labelName="Amount" isLabelShown="true" place="10,000" />
             <InputSlot
+              labelName="Amount"
+              :isLabelShown="true"
+              place="10,000"
+              unique="one"
+              v-model="amount"
+            />
+            <InputSlot
+              unique="two"
               place="* * * *"
               labelName="Password"
-              isLabelShown="true"
+              :isLabelShown="true"
               inputType="password"
+              v-model="pass"
             />
           </div>
           <div class="btn-divivder">
             <DepositbtnSlot
               propName="Deposit"
               link="/wallet/deposit"
-              isRout="true"
+              :isRout="true"
               subName="Withdraw"
             />
           </div>
@@ -37,6 +45,14 @@
 
 <script setup>
 import withdraw from '@/components/assets/withdraw.png'
+import { ref } from 'vue'
+
+const pass = ref('')
+const amount = ref('')
+
+function handleForm() {
+  console.log(pass.value, amount.value)
+}
 </script>
 
 <style scoped>
