@@ -10,10 +10,6 @@
       <template #others>
         <div class="own-custom">
           <DepositbtnSlot propName="Deposit" link="/wallet/deposit" />
-          <!-- <router-link to="/wallet/deposit">
-            Deposit
-            <i class="material-icons">chevron_right</i>
-          </router-link> -->
           <div class="acc-details">
             <div class="acc-no--details">
               <div class="left">
