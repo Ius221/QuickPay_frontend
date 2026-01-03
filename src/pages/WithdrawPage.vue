@@ -10,9 +10,9 @@
       <template #others>
         <form @submit.prevent="handleForm()" method="post">
           <div class="align-me">
-            <InputSlot labelName="Amount" isLabelShown="true" />
+            <InputSlot labelName="Amount" isLabelShown="true" place="10,000" />
             <InputSlot
-              place="Password"
+              place="* * * *"
               labelName="Password"
               isLabelShown="true"
               inputType="password"
