@@ -6,6 +6,7 @@ import SignupPage from '@/components/auth/SignupPage.vue'
 import DashboardPage from '@/pages/DashboardPage.vue'
 import ErrorPage from '@/pages/ErrorPage.vue'
 import DepositPage from '@/pages/DepositPage.vue'
+import WithdrawPage from '@/pages/WithdrawPage.vue'
 
 const routes = [
   { path: '/', redirect: '/home' },
@@ -13,9 +14,13 @@ const routes = [
   { path: '/login', component: LoginPage },
   { path: '/signup', component: SignupPage },
   { path: '/dashboard', component: DashboardPage },
-  { path: '/wallet/deposit', component: DepositPage },
+  {
+    path: '/wallet', children: [
+      { path: 'deposit', component: DepositPage },
+      { path: 'withdraw', component: WithdrawPage },
+    ]
+  },
   { path: '/:err', component: ErrorPage },
-
 ]
 
 const router = createRouter({
