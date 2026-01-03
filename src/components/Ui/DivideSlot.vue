@@ -35,10 +35,4 @@ h2 {
   opacity: 0.7;
   letter-spacing: 2px;
 }
-.first-part {
-  /* background-color: #333; */
-}
-.second-part {
-  /* background-color: #444; */
-}
 </style>
