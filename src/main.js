@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router/router'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import globalComponents from './plugins/globalComponent'
 
 const pinia = createPinia()
 const app = createApp(App)
@@ -11,5 +12,6 @@ pinia.use(piniaPluginPersistedstate)
 
 app.use(router)
 app.use(pinia)
+app.use(globalComponents)
 
 app.mount('#app')

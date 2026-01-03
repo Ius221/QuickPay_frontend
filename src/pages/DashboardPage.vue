@@ -40,11 +40,7 @@
 </template>
 
 <script setup>
-import NavBar from '@/components/nav/NavBar.vue'
-import GlassSlot from '@/components/Ui/GlassSlot.vue'
 import dashboard from '@/components/assets/dashboard.png'
-import DivideSlot from '@/components/Ui/DivideSlot.vue'
-import DepositbtnSlot from '@/components/Ui/DepositbtnSlot.vue'
 
 const formatINR = (amount) => {
   return new Intl.NumberFormat('en-IN').format(amount)
