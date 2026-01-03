@@ -9,10 +9,11 @@
       </template>
       <template #others>
         <div class="own-custom">
-          <router-link to="/wallet/deposit">
+          <DepositbtnSlot propName="Deposit" link="/wallet/deposit" />
+          <!-- <router-link to="/wallet/deposit">
             Deposit
             <i class="material-icons">chevron_right</i>
-          </router-link>
+          </router-link> -->
           <div class="acc-details">
             <div class="acc-no--details">
               <div class="left">
@@ -47,6 +48,7 @@ import NavBar from '@/components/nav/NavBar.vue'
 import GlassSlot from '@/components/Ui/GlassSlot.vue'
 import dashboard from '@/components/assets/dashboard.png'
 import DivideSlot from '@/components/Ui/DivideSlot.vue'
+import DepositbtnSlot from '@/components/Ui/DepositbtnSlot.vue'
 
 const formatINR = (amount) => {
   return new Intl.NumberFormat('en-IN').format(amount)
@@ -65,23 +67,7 @@ const formatINR = (amount) => {
   justify-content: space-between;
   height: 45%;
 }
-a {
-  background: linear-gradient(to left, #005240, #28623a);
-  color: rgba(204, 204, 204, 0.7);
-  border: 1px solid #848484;
-  padding: 16px 32px;
-  border-radius: 40px;
-  cursor: pointer;
-  font-size: 2.4rem;
-  letter-spacing: 2px;
-  margin-top: 24px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  padding-left: 40px;
-  text-decoration: none;
-  width: fit-content;
-}
+
 .custom-size--icon,
 .custom-size--icon2 {
   font-size: 5.2rem;
