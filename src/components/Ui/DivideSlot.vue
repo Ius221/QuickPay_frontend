@@ -30,6 +30,7 @@ h2 {
   letter-spacing: 5px;
 }
 .desc {
+  margin-top: -14px;
   font-size: 2.4rem;
   color: #ccc;
   opacity: 0.7;
