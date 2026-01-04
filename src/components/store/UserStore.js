@@ -9,9 +9,20 @@ export const useUserStore = defineStore('user', () => {
     let isLoggedIn = ref(false)
     let accNo = ref(0)
     let money = ref(0)
+    let csrf = ref('')
 
     // GETTER
     const getToken = computed(() => token.value)
+    const getAllData = computed(() => {
+        return {
+            loginUser: username.value,
+            isLoggedIn: isLoggedIn.value,
+            jwtToken: token.value,
+            accNo: accNo.value,
+            availableMoney: money.value,
+            csrfToken: csrf.value,
+        }
+    })
 
 
     // ACTIONS
@@ -22,6 +33,9 @@ export const useUserStore = defineStore('user', () => {
         money.value = data.money
         isLoggedIn.value = true
     }
+    function setCsrf(token) {
+        csrf.value = token
+    }
 
     function logout() {
         isLoggedIn.value = false
@@ -31,7 +45,7 @@ export const useUserStore = defineStore('user', () => {
         money.value = null
     }
 
-    return { token, username, isLoggedIn, accNo, getToken, setUser, money, logout }
+    return { token, username, isLoggedIn, accNo, getToken, setUser, money, logout, csrf, getAllData, setCsrf }
 }, {
     persist: true
 })

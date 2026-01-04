@@ -39,6 +39,7 @@ import { ref } from 'vue'
 import GlassBox from '../Ui/GlassSlot.vue'
 import HeadingSlot from '../Ui/HeadingSlot.vue'
 import { useUserStore } from '../store/UserStore'
+import router from '@/router/router'
 
 let email = ref(null)
 let pass = ref(null)
@@ -69,6 +70,15 @@ const formSubmit = async () => {
       console.log(res)
       isLoading.value = false
       userStore.setUser(res)
+
+      return fetch('http://localhost:8080/api/v1/csrf/generate', {
+        method: 'GET',
+      })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      userStore.setCsrf(data.token)
+      router.replace('/dashboard')
     })
     .catch((err) => {
       isLoading.value = false

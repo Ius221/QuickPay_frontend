@@ -62,6 +62,7 @@ const userStore = useUserStore()
 onMounted(() => {
   console.log('User details')
   console.log(userStore.token)
+  console.log(userStore.getAllData)
 })
 
 const formSubmit = async () => {
