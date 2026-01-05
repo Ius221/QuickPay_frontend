@@ -2,7 +2,7 @@
   <GlassSlot id="glass">
     <NavBar></NavBar>
     <divide-slot>
-      <template #heading>ayush gupta</template>
+      <template #heading>{{ currUserObj.username }}</template>
       <template #description>
         Your money, your control — all in one place. <br />
         Track balances, transactions, account activity with ease.
@@ -16,7 +16,7 @@
                 <i class="material-icons custom-size--icon"> assignment_ind </i>
               </div>
               <div class="right">
-                <p class="data">989898</p>
+                <p class="data">{{ currUserObj.accNo }}</p>
                 <p class="support-data">Account</p>
               </div>
             </div>
@@ -25,7 +25,7 @@
                 <i class="material-icons custom-size--icon2"> currency_rupee </i>
               </div>
               <div class="right">
-                <p class="data">{{ formatINR(898989) }}</p>
+                <p class="data">{{ currUserObj.availableMoney }}</p>
                 <p class="support-data">Balance</p>
               </div>
             </div>
@@ -41,8 +41,17 @@
 
 <script setup>
 import dashboard from '@/components/assets/dashboard.png'
+import { useUserStore } from '@/components/store/UserStore'
 
-const formatINR = (amount) => {
+const currUser = useUserStore()
+
+const currUserObj = {
+  username: currUser.getAllData.loginUser,
+  accNo: currUser.getAllData.accNo,
+  availableMoney: formatINR(currUser.getAllData.availableMoney),
+}
+
+function formatINR(amount) {
   return new Intl.NumberFormat('en-IN').format(amount)
 }
 </script>
