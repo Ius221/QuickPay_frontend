@@ -47,14 +47,44 @@
 
 <script setup>
 import transfer from '@/components/assets/transfer.png'
+import { useUserStore } from '@/components/store/UserStore'
+import api from '@/plugins/axiosConfig'
 import { ref } from 'vue'
+import { toast } from 'vue3-toastify'
 
 const amount = ref('')
 const accno = ref('')
 const pass = ref('')
+const userStore = useUserStore()
+const username = userStore.getAllData.loginUser
 
-const handleForm = () => {
+const handleForm = async () => {
   console.log(amount.value, accno.value, pass.value)
+  try {
+    const response = await api.post(`api/v1/transfer/other?username=${username}`, {
+      accNo: accno.value,
+      money: amount.value,
+      password: pass.value,
+    })
+
+    console.log(response)
+    if (response.status === 200) callToast('Successfully Transfered!!!', 'success')
+  } catch (err) {
+    callToast('Failed!!!', 'error')
+    console.log(err)
+  }
+}
+
+function callToast(msg, status) {
+  amount.value = ''
+  accno.value = ''
+  pass.value = ''
+  toast(msg, {
+    theme: 'auto',
+    type: status,
+    autoClose: 3000,
+    dangerouslyHTMLString: true,
+  })
 }
 </script>
 

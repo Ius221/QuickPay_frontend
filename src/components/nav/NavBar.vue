@@ -9,9 +9,21 @@
       <router-link to="/transfer">Transfer</router-link>
       <router-link to="/transactions">Transactions</router-link>
     </div>
-    <button class="logout">Logout</button>
+    <button class="logout" @click="logoutMe">Logout</button>
   </div>
 </template>
+
+<script setup>
+import router from '@/router/router'
+import { useUserStore } from '../store/UserStore'
+
+const userStore = useUserStore()
+
+const logoutMe = () => {
+  userStore.logout()
+  router.replace('/login')
+}
+</script>
 
 <style scoped>
 .main-container {
