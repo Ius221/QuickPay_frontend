@@ -1,3 +1,4 @@
+import api from "@/plugins/axiosConfig";
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 
@@ -12,6 +13,7 @@ export const useUserStore = defineStore('user', () => {
     // GETTER
     const getToken = computed(() => token.value)
     const isLoggedIn = computed(() => login.value)
+    const getBalance = computed(() => money.value)
     const getAllData = computed(() => {
         return {
             loginUser: username.value,
@@ -31,8 +33,6 @@ export const useUserStore = defineStore('user', () => {
         money.value = data.money
         login.value = true
     }
-
-
     function logout() {
         login.value = false
         token.value = null
@@ -40,8 +40,19 @@ export const useUserStore = defineStore('user', () => {
         accNo.value = null
         money.value = null
     }
+    async function fetchBalance() {
+        if (!username.value) return
+        try {
+            const response = await api.get(`/api/v1/show/balance?username=${username.value}`);
+            money.value = response.data
+            return response.data
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    }
 
-    return { token, username, isLoggedIn, accNo, getToken, setUser, money, logout, getAllData, login }
+    return { token, username, isLoggedIn, accNo, getToken, setUser, money, logout, getAllData, login, fetchBalance, getBalance }
 }, {
     persist: true
 })

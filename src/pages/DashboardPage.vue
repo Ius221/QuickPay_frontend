@@ -25,7 +25,8 @@
                 <i class="material-icons custom-size--icon2"> currency_rupee </i>
               </div>
               <div class="right">
-                <p class="data">{{ currUserObj.availableMoney }}</p>
+                <div class="loader" v-if="isLoading"></div>
+                <p class="data" v-else>{{ currUser.getBalance }}</p>
                 <p class="support-data">Balance</p>
               </div>
             </div>
@@ -42,14 +43,39 @@
 <script setup>
 import dashboard from '@/components/assets/dashboard.png'
 import { useUserStore } from '@/components/store/UserStore'
+import { computed, onMounted, ref } from 'vue'
 
 const currUser = useUserStore()
+const isLoading = ref(true)
 
-const currUserObj = {
-  username: currUser.getAllData.loginUser,
-  accNo: currUser.getAllData.accNo,
-  availableMoney: formatINR(currUser.getAllData.availableMoney),
-}
+const currUserObj = computed(() => {
+  return {
+    username: currUser.getAllData.loginUser,
+    accNo: currUser.getAllData.accNo,
+    availableMoney: formatINR(currUser.getAllData.availableMoney),
+  }
+})
+
+onMounted(async () => {
+  try {
+    await currUser.fetchBalance()
+    console.log(currUser.getBalance, currUser.isLoggedIn)
+  } catch (err) {
+    console.log(err)
+  } finally {
+    isLoading.value = false
+  }
+})
+
+// const currUserObj = {
+//   username: currUser.getAllData.loginUser,
+//   accNo: currUser.getAllData.accNo,
+//   availableMoney: formatINR(currUser.getAllData.availableMoney),
+// }
+
+// onMounted(() => {
+//   currUserObj
+// })
 
 function formatINR(amount) {
   return new Intl.NumberFormat('en-IN').format(amount)
@@ -108,5 +134,36 @@ img {
   width: 150%;
   margin-bottom: -4px;
   filter: drop-shadow(14px 14px 14px rgba(0, 0, 0, 0.25));
+}
+.loader {
+  width: 50px;
+  aspect-ratio: 4.5;
+  --_g: no-repeat radial-gradient(circle closest-side, #cccc 90%, #0000);
+  background:
+    var(--_g) 0% 50%,
+    var(--_g) 50% 50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 90%;
+  animation: l7 1s infinite linear;
+}
+@keyframes l7 {
+  33% {
+    background-size:
+      calc(100% / 3) 0%,
+      calc(100% / 3) 100%,
+      calc(100% / 3) 100%;
+  }
+  50% {
+    background-size:
+      calc(100% / 3) 100%,
+      calc(100% / 3) 0%,
+      calc(100% / 3) 100%;
+  }
+  66% {
+    background-size:
+      calc(100% / 3) 100%,
+      calc(100% / 3) 100%,
+      calc(100% / 3) 0%;
+  }
 }
 </style>
