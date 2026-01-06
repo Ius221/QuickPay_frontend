@@ -45,13 +45,41 @@
 
 <script setup>
 import withdraw from '@/components/assets/withdraw.png'
+import { toast } from 'vue3-toastify'
 import { ref } from 'vue'
+import api from '@/plugins/axiosConfig'
+import { useUserStore } from '@/components/store/UserStore'
 
 const pass = ref('')
 const amount = ref('')
+const userStore = useUserStore()
+const username = userStore.getAllData.loginUser
 
-function handleForm() {
-  console.log(pass.value, amount.value)
+async function handleForm() {
+  try {
+    const response = await api.post(`api/v1/transfer/self/withdraw?username=${username}`, {
+      accNo: userStore.getAllData.accNo,
+      money: amount.value,
+      password: pass.value,
+    })
+    if (response.status === 200) showToast('Successfully Withdraw!!!', 'success')
+
+    userStore.setUser.money = response.data.money
+  } catch (err) {
+    showToast('Failed!!!', 'error')
+    console.log(err)
+  }
+}
+
+function showToast(msg, status) {
+  amount.value = ''
+  pass.value = ''
+  toast(msg, {
+    theme: 'auto',
+    type: status,
+    autoClose: 3000,
+    dangerouslyHTMLString: true,
+  })
 }
 </script>
 
