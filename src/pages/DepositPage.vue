@@ -31,12 +31,53 @@
 
 <script setup>
 import deposit from '@/components/assets/deposit.png'
+import { useUserStore } from '@/components/store/UserStore'
+import api from '@/plugins/axiosConfig'
 import { ref } from 'vue'
+import { toast } from 'vue3-toastify'
 
+const userStore = useUserStore()
+const userName = userStore.getAllData.loginUser
 const amount = ref('')
 
-function handleForm() {
-  console.log(amount.value)
+async function handleForm() {
+  try {
+    const response = await api.post(
+      `api/v1/transfer/self/deposit?username=${userName}`,
+      {
+        accNo: userStore.getAllData.accNo,
+        money: amount.value,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userStore.getToken}`,
+        },
+        withCredentials: true,
+      },
+    )
+
+    console.log('SUCCESSFULLY ', response)
+    if (response.status === 200) {
+      toast(` Successfully Deposited!!!`, {
+        theme: 'auto',
+        type: 'success',
+        autoClose: 3000,
+        dangerouslyHTMLString: true,
+      })
+    } else {
+      toast('Failed !!!', {
+        theme: 'auto',
+        type: 'error',
+        autoClose: 3000,
+        dangerouslyHTMLString: true,
+      })
+    }
+    console.log(response.status, 200)
+    userStore.setUser.money = response.data.money
+  } catch (err) {
+    console.log(err)
+  }
 }
 </script>
 
