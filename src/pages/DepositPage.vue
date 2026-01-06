@@ -48,36 +48,24 @@ async function handleForm() {
         accNo: userStore.getAllData.accNo,
         money: amount.value,
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userStore.getToken}`,
-        },
-        withCredentials: true,
-      },
     )
+    if (response.status === 200) callToast('Successfully Deposited!!!', 'success')
 
-    console.log('SUCCESSFULLY ', response)
-    if (response.status === 200) {
-      toast(` Successfully Deposited!!!`, {
-        theme: 'auto',
-        type: 'success',
-        autoClose: 3000,
-        dangerouslyHTMLString: true,
-      })
-    } else {
-      toast('Failed !!!', {
-        theme: 'auto',
-        type: 'error',
-        autoClose: 3000,
-        dangerouslyHTMLString: true,
-      })
-    }
-    console.log(response.status, 200)
     userStore.setUser.money = response.data.money
   } catch (err) {
+    callToast('Failed!!!', 'error')
     console.log(err)
   }
+}
+
+function callToast(msg, status) {
+  amount.value = ''
+  toast(msg, {
+    theme: 'auto',
+    type: status,
+    autoClose: 3000,
+    dangerouslyHTMLString: true,
+  })
 }
 </script>
 
