@@ -11,10 +11,26 @@ import WithdrawPage from '@/pages/WithdrawPage.vue'
 import TransferPage from '@/pages/TransferPage.vue'
 
 const routes = [
-  { path: '/', redirect: '/home' },
-  { path: '/home', component: HomePage },
-  { path: '/login', component: LoginPage },
-  { path: '/signup', component: SignupPage },
+  {
+    path: '/',
+    redirect: '/home',
+    meta: { guestOnly: true, requiresAuth: false }
+  },
+  {
+    path: '/home',
+    component: HomePage,
+    meta: { guestOnly: true }
+  },
+  {
+    path: '/login',
+    component: LoginPage,
+    meta: { guestOnly: true }
+  },
+  {
+    path: '/signup',
+    component: SignupPage,
+    meta: { guestOnly: true }
+  },
   {
     path: '/dashboard',
     component: DashboardPage,
@@ -52,14 +68,16 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    const userStore = useUserStore();
+  const userStore = useUserStore();
 
-    if (userStore.isLoggedIn) next();
-    else next('/login')
+  if (!userStore.isLoggedIn) {
+    if (to.meta.requiresAuth) next('/login');
+    else next()
   } else {
-    next();
+    if (to.meta.guestOnly) next('/dashboard')
+    else next
   }
+  next();
 })
 
 export default router

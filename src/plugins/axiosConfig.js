@@ -1,4 +1,5 @@
 import { useUserStore } from "@/components/store/UserStore";
+import router from "@/router/router";
 import axios from "axios";
 
 const api = axios.create({
@@ -19,6 +20,14 @@ api.interceptors.request.use(
         return config
     },
     (error) => {
+
+        if (error.response && (error.response.status === 403 || error.response.status === 401)) {
+            const userStore = useUserStore()
+
+            userStore.logout();
+            router.replace("/login")
+        }
+
         return Promise.reject(error);
     }
 )
