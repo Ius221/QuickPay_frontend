@@ -9,6 +9,7 @@ import ErrorPage from '@/pages/ErrorPage.vue'
 import DepositPage from '@/pages/DepositPage.vue'
 import WithdrawPage from '@/pages/WithdrawPage.vue'
 import TransferPage from '@/pages/TransferPage.vue'
+import TransactionPage from '@/pages/TransactionPage.vue'
 
 const routes = [
   {
@@ -53,6 +54,11 @@ const routes = [
   {
     path: '/transfer',
     component: TransferPage,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/transactions',
+    component: TransactionPage,
     meta: { requiresAuth: true }
   },
   {
