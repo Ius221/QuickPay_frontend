@@ -42,9 +42,10 @@ const amount = ref('')
 
 async function handleForm() {
   try {
-    const response = await api.post(`api/v1/transfer/self/deposit?username=${userName}`, {
+    const response = await api.post(`/transfer/self/deposit`, {
       accNo: userStore.getAllData.accNo,
       money: amount.value,
+      email: userStore.getAllData.email,
     })
 
     if (response.status === 200) callToast('Successfully Deposited!!!', 'success')

@@ -29,6 +29,7 @@
 <script setup>
 import TransactionTop from '@/components/nav/TransactionTop.vue'
 import IndvTransaction from '@/components/Ui/IndvTransaction.vue'
+import api from '@/plugins/axiosConfig';
 
 const trans = [
   {
@@ -112,6 +113,8 @@ const trans = [
     time: '2026-01-06T07:56:48.772199',
   },
 ]
+
+api.post('')
 </script>
 
 <style scoped>

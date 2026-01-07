@@ -56,15 +56,15 @@ const amount = ref('')
 const accno = ref('')
 const pass = ref('')
 const userStore = useUserStore()
-const username = userStore.getAllData.loginUser
 
 const handleForm = async () => {
   console.log(amount.value, accno.value, pass.value)
   try {
-    const response = await api.post(`api/v1/transfer/other?username=${username}`, {
+    const response = await api.post(`/transfer/other`, {
       accNo: accno.value,
       money: amount.value,
       password: pass.value,
+      email: userStore.getAllData.email,
     })
 
     console.log(response)

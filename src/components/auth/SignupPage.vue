@@ -59,16 +59,10 @@ let isLoading = ref(false)
 const router = useRouter()
 const userStore = useUserStore()
 
-onMounted(() => {
-  console.log('User details')
-  console.log(userStore.token)
-  console.log(userStore.getAllData)
-})
-
 const formSubmit = async () => {
   isLoading.value = true
   if (!username.value || !pass.value) alert('Add Values!!!')
-  await fetch('http://localhost:8080/api/v1/auth/signup', {
+  await fetch('http://localhost:8080/api/v2/auth/signup', {
     method: 'POST',
     body: JSON.stringify({
       username: username.value,

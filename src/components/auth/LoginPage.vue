@@ -49,7 +49,7 @@ const userStore = useUserStore()
 const formSubmit = async () => {
   isLoading.value = true
   if (!email.value || !pass.value) return
-  await fetch('http://localhost:8080/api/v1/auth/login', {
+  await fetch('http://localhost:8080/api/v2/auth/login', {
     method: 'POST',
     body: JSON.stringify({
       email: email.value,
@@ -70,6 +70,7 @@ const formSubmit = async () => {
       console.log(res)
       isLoading.value = false
       userStore.setUser(res)
+      console.log(res)
       router.replace('/dashboard')
     })
     .catch((err) => {

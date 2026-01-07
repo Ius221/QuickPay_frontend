@@ -57,10 +57,11 @@ const username = userStore.getAllData.loginUser
 
 async function handleForm() {
   try {
-    const response = await api.post(`api/v1/transfer/self/withdraw?username=${username}`, {
+    const response = await api.post(`/transfer/self/withdraw`, {
       accNo: userStore.getAllData.accNo,
       money: amount.value,
       password: pass.value,
+      email: userStore.email,
     })
     if (response.status === 200) showToast('Successfully Withdraw!!!', 'success')
 

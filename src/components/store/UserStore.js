@@ -9,6 +9,7 @@ export const useUserStore = defineStore('user', () => {
     let login = ref(false)
     let accNo = ref(0)
     let money = ref(0)
+    let email = ref(null)
 
     // GETTER
     const getToken = computed(() => token.value)
@@ -21,9 +22,9 @@ export const useUserStore = defineStore('user', () => {
             jwtToken: token.value,
             accNo: accNo.value,
             availableMoney: money.value,
+            email: email.value
         }
     })
-
 
     // ACTIONS
     function setUser(data) {
@@ -32,6 +33,7 @@ export const useUserStore = defineStore('user', () => {
         accNo.value = data.accNo
         money.value = data.money
         login.value = true
+        email.value = data.email
     }
     function logout() {
         login.value = false
@@ -39,11 +41,12 @@ export const useUserStore = defineStore('user', () => {
         username.value = null
         accNo.value = null
         money.value = null
+        email.value = null
     }
     async function fetchBalance() {
         if (!username.value) return
         try {
-            const response = await api.get(`/api/v1/show/balance?username=${username.value}`);
+            const response = await api.get(`/show/balance?accNo=${accNo.value}`);
             money.value = response.data
             return response.data
         } catch (err) {
@@ -52,7 +55,7 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-    return { token, username, isLoggedIn, accNo, getToken, setUser, money, logout, getAllData, login, fetchBalance, getBalance }
+    return { token, username, isLoggedIn, accNo, getToken, setUser, money, logout, getAllData, login, fetchBalance, getBalance, email }
 }, {
     persist: true
 })
