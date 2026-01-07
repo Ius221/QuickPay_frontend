@@ -3,7 +3,12 @@
     <nav-bar />
     <div class="outer-all">
       <TransactionTop />
+      <div v-if="isLoading" class="waiting">
+        <div class="loader"></div>
+        <p>Loading...</p>
+      </div>
       <IndvTransaction
+        v-else
         v-for="(item, abc) in trans"
         :key="abc"
         :id="item.id"
@@ -29,92 +34,45 @@
 <script setup>
 import TransactionTop from '@/components/nav/TransactionTop.vue'
 import IndvTransaction from '@/components/Ui/IndvTransaction.vue'
-import api from '@/plugins/axiosConfig';
+import api from '@/plugins/axiosConfig'
+import { onMounted, ref } from 'vue'
+import { useUserStore } from '@/components/store/UserStore'
 
-const trans = [
-  {
-    id: 1,
-    fullName: 'Ayush Gupta',
-    accNo: 5732,
-    amount: 1840.5,
-    status: 'deposit',
-    time: '2026-01-06T08:22:41.128904',
-  },
-  {
-    id: 2,
-    fullName: 'Neha Verma',
-    accNo: 9146,
-    amount: 620.75,
-    status: 'deposit',
-    time: '2026-01-06T15:47:09.774221',
-  },
-  {
-    id: 3,
-    fullName: 'Rohit Sharma',
-    accNo: 2065,
-    amount: 4300.0,
-    status: 'send',
-    time: '2026-01-06T11:03:58.559812',
-  },
-  {
-    id: 4,
-    fullName: 'Priya Singh',
-    accNo: 7891,
-    amount: 980.25,
-    status: 'withdraw',
-    time: '2026-01-06T18:36:14.330902',
-  },
-  {
-    id: 5,
-    fullName: 'Karan Mehta',
-    accNo: 4429,
-    amount: 7600.9,
-    status: 'deposit',
-    time: '2026-01-06T09:14:27.019883',
-  },
-  {
-    id: 6,
-    fullName: 'Ananya Iyer',
-    accNo: 6583,
-    amount: 150.0,
-    status: 'deposit',
-    time: '2026-01-06T16:52:03.654301',
-  },
-  {
-    id: 7,
-    fullName: 'Vikram Joshi',
-    accNo: 8314,
-    amount: 2750.4,
-    status: 'withdraw',
-    time: '2026-01-06T13:28:59.445612',
-  },
-  {
-    id: 8,
-    fullName: 'Sneha Patel',
-    accNo: 3907,
-    amount: 520.6,
-    status: 'deposit',
-    time: '2026-01-06T10:41:36.998421',
-  },
-  {
-    id: 9,
-    fullName: 'Rahul Malhotra',
-    accNo: 9642,
-    amount: 8400.0,
-    status: 'withdraw',
-    time: '2026-01-06T19:05:10.203557',
-  },
-  {
-    id: 10,
-    fullName: 'Pooja Nair',
-    accNo: 1178,
-    amount: 310.9,
-    status: 'deposit',
-    time: '2026-01-06T07:56:48.772199',
-  },
-]
+const userStore = useUserStore()
+const trans = []
+const isLoading = ref(true)
 
-api.post('')
+onMounted(async () => {
+  try {
+    const response = await api.get(
+      `show/transaction?accNo=${userStore.getAllData.accNo}&sortOrder=descending`,
+    )
+
+    // const tempObj = {
+    //   status: 'DEPOSIT',
+    //   money: 100.0,
+    //   senderName: 'Self',
+    //   senderAccNo: '1005',
+    //   time: '2026-01-08T00:04:20.780157',
+    // }
+    response.data.content.forEach((e, num) => {
+      const tempObj = {
+        id: num + 1,
+        fullName: e.senderName,
+        accNo: e.senderAccNo,
+        amount: e.money,
+        status: e.status,
+        time: e.time,
+      }
+      trans.push(tempObj)
+      console.log(tempObj)
+    })
+  } catch (err) {
+    console.log(err)
+  } finally {
+    isLoading.value = false
+  }
+})
 </script>
 
 <style scoped>
@@ -170,4 +128,33 @@ api.post('')
   color: #fff;
 }
   */
+
+/* Loading  */
+.waiting {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 7rem;
+}
+
+.waiting p {
+  font-size: 2.4rem;
+  color: #ccc;
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid;
+  border-color: #cccc #0000;
+  animation: l1 1s infinite;
+}
+@keyframes l1 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}
 </style>

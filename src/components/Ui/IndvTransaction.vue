@@ -1,5 +1,8 @@
 <template>
-  <div class="header" :class="status == 'withdraw' || status == 'send' ? 'withdraw' : ''">
+  <div
+    class="header"
+    :class="status.toLowerCase() == 'withdraw' || status.toLowerCase() == 'send' ? 'withdraw' : ''"
+  >
     <div class="child item-1">{{ id }}</div>
     <div class="child item-2">{{ name }}</div>
     <div class="child item-3">{{ accno }}</div>
