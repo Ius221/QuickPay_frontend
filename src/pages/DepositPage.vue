@@ -10,9 +10,10 @@
       <template #others>
         <form @submit.prevent="handleForm" method="post">
           <div class="use-me">
-            <input-slot unique="one" v-model="amount" />
+            <input-slot unique="one" v-model="amount" :isDisabled="isSubmit" />
           </div>
-          <div class="btn-divivder">
+          <loading-slot v-if="isSubmit" />
+          <div class="btn-divivder" v-else>
             <DepositbtnSlot
               propName="Withdraw"
               link="/wallet/withdraw"
@@ -37,10 +38,11 @@ import { ref } from 'vue'
 import { toast } from 'vue3-toastify'
 
 const userStore = useUserStore()
-const userName = userStore.getAllData.loginUser
+let isSubmit = ref(false)
 const amount = ref('')
 
 async function handleForm() {
+  isSubmit.value = true
   try {
     const response = await api.post(`/transfer/self/deposit`, {
       accNo: userStore.getAllData.accNo,
@@ -54,6 +56,8 @@ async function handleForm() {
   } catch (err) {
     callToast('Failed!!!', 'error')
     console.log(err)
+  } finally {
+    isSubmit.value = false
   }
 }
 

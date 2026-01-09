@@ -5,6 +5,7 @@ import GlassSlot from "@/components/Ui/GlassSlot.vue";
 import HeadingSlot from "@/components/Ui/HeadingSlot.vue";
 import InputSlot from "@/components/Ui/InputSlot.vue";
 import NavBar from "@/components/nav/NavBar.vue";
+import LoadingSlot from "@/components/Ui/LoadingSlot.vue";
 
 export default {
     install(app) {
@@ -15,5 +16,6 @@ export default {
         app.component('HeadingSlot', HeadingSlot)
         app.component('InputSlot', InputSlot)
         app.component('NavBar', NavBar)
+        app.component('LoadingSlot', LoadingSlot)
     }
 }

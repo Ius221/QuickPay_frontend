@@ -10,6 +10,7 @@
     :placeholder="place"
     @input="handleInput"
     required
+    :disabled="isDisabled"
   />
 </template>
 
@@ -21,6 +22,10 @@ const props = defineProps({
   place: {
     type: String,
     default: 'Amount',
+  },
+  isDisabled: {
+    type: Boolean,
+    default: false,
   },
   inputType: {
     type: String,

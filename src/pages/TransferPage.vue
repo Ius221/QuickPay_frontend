@@ -16,6 +16,7 @@
               place="10,000"
               unique="one"
               v-model="amount"
+              :isDisabled="isSubmit"
             />
             <InputSlot
               labelName="Account"
@@ -23,6 +24,7 @@
               place="0000"
               unique="two"
               v-model="accno"
+              :isDisabled="isSubmit"
             />
             <InputSlot
               unique="three"
@@ -31,9 +33,11 @@
               :isLabelShown="true"
               inputType="password"
               v-model="pass"
+              :isDisabled="isSubmit"
             />
           </div>
-          <div class="btn-divivder">
+          <loading-slot v-if="isSubmit" />
+          <div class="btn-divivder" v-else>
             <DepositbtnSlot subName="Send" :isRout="true" noRoute="value" />
           </div>
         </form>
@@ -52,6 +56,7 @@ import api from '@/plugins/axiosConfig'
 import { ref } from 'vue'
 import { toast } from 'vue3-toastify'
 
+let isSubmit = ref(false)
 const amount = ref('')
 const accno = ref('')
 const pass = ref('')
@@ -60,6 +65,7 @@ const userStore = useUserStore()
 const handleForm = async () => {
   console.log(amount.value, accno.value, pass.value)
   try {
+    isSubmit.value = true
     const response = await api.post(`/transfer/other`, {
       accNo: accno.value,
       money: amount.value,
@@ -72,6 +78,8 @@ const handleForm = async () => {
   } catch (err) {
     callToast('Failed!!!', 'error')
     console.log(err)
+  } finally {
+    isSubmit.value = false
   }
 }
 

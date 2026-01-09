@@ -1,8 +1,14 @@
 <template>
-  <button type="submit" v-if="isRout">{{ subName }}</button>
-  <router-link :to="link" :id="isRout ? 'customize-me' : null" v-if="noRoute === null">{{
-    propName
-  }}</router-link>
+  <button type="submit" v-if="isRout" :disabled="isDisabled" :class="{ 'diable-btn': isDisabled }">
+    {{ subName }}
+  </button>
+  <router-link
+    :to="link"
+    :id="isRout ? 'customize-me' : null"
+    v-if="noRoute === null"
+    :class="{ 'diable-nav': isDisabled }"
+    >{{ propName }}</router-link
+  >
 </template>
 
 <script setup>
@@ -23,6 +29,10 @@ defineProps({
   noRoute: {
     type: String,
     default: null,
+  },
+  isDisabled: {
+    type: Boolean,
+    default: false,
   },
   subName: {
     type: String,
@@ -63,5 +73,14 @@ button:hover {
 }
 #customize-me:hover {
   box-shadow: none;
+}
+.diable-nav,
+.diable-btn {
+  cursor: not-allowed !important;
+}
+.diable-nav,
+.diable-btn:hover {
+  box-shadow: none !important;
+  color: rgba(204, 204, 204, 0.7);
 }
 </style>

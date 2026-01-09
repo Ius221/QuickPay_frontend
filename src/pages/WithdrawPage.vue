@@ -16,6 +16,7 @@
               place="10,000"
               unique="one"
               v-model="amount"
+              :isDisabled="isSubmit"
             />
             <InputSlot
               unique="two"
@@ -24,9 +25,11 @@
               :isLabelShown="true"
               inputType="password"
               v-model="pass"
+              :isDisabled="isSubmit"
             />
           </div>
-          <div class="btn-divivder">
+          <loading-slot v-if="isSubmit" />
+          <div class="btn-divivder" v-else>
             <DepositbtnSlot
               propName="Deposit"
               link="/wallet/deposit"
@@ -50,13 +53,14 @@ import { ref } from 'vue'
 import api from '@/plugins/axiosConfig'
 import { useUserStore } from '@/components/store/UserStore'
 
+let isSubmit = ref(false)
 const pass = ref('')
 const amount = ref('')
 const userStore = useUserStore()
-const username = userStore.getAllData.loginUser
 
 async function handleForm() {
   try {
+    isSubmit.value = true
     const response = await api.post(`/transfer/self/withdraw`, {
       accNo: userStore.getAllData.accNo,
       money: amount.value,
@@ -69,6 +73,8 @@ async function handleForm() {
   } catch (err) {
     showToast('Failed!!!', 'error')
     console.log(err)
+  } finally {
+    isSubmit.value = false
   }
 }
 
