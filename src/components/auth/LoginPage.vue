@@ -67,10 +67,8 @@ const formSubmit = async () => {
       return res.json()
     })
     .then((res) => {
-      console.log(res)
       isLoading.value = false
       userStore.setUser(res)
-      console.log(res)
       router.replace('/dashboard')
     })
     .catch((err) => {

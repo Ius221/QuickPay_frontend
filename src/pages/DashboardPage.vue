@@ -59,7 +59,6 @@ const currUserObj = computed(() => {
 onMounted(async () => {
   try {
     await currUser.fetchBalance()
-    console.log(currUser.getBalance, currUser.isLoggedIn)
   } catch (err) {
     console.log(err)
   } finally {

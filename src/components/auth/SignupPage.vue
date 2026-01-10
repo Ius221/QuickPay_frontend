@@ -74,7 +74,6 @@ const formSubmit = async () => {
     },
   })
     .then(async (res) => {
-      console.log(res)
       if (!res.ok) {
         const err = await res.json()
         throw err
@@ -82,7 +81,6 @@ const formSubmit = async () => {
       return res.json()
     })
     .then((res) => {
-      console.log(res)
       toast('Account created Successfully', {
         theme: 'auto',
         type: 'success',
@@ -93,9 +91,7 @@ const formSubmit = async () => {
     })
     .catch((err) => {
       let msg = ref(null)
-      console.log(err)
       if (err.error) {
-        console.log(err.error.split(' ').slice(4).join(' '))
         msg.value = err.error.split(' ').slice(4).join(' ')
       }
       toast(err.message || msg, {

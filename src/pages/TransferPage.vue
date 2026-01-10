@@ -63,7 +63,6 @@ const pass = ref('')
 const userStore = useUserStore()
 
 const handleForm = async () => {
-  console.log(amount.value, accno.value, pass.value)
   try {
     isSubmit.value = true
     const response = await api.post(`/transfer/other`, {
@@ -73,7 +72,6 @@ const handleForm = async () => {
       email: userStore.getAllData.email,
     })
 
-    console.log(response)
     if (response.status === 200) callToast('Successfully Transfered!!!', 'success')
   } catch (err) {
     callToast('Failed!!!', 'error')

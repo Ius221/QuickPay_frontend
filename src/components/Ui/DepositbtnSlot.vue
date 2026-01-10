@@ -37,7 +37,7 @@ defineProps({
   subName: {
     type: String,
     require: false,
-    default: false,
+    default: null,
   },
 })
 </script>

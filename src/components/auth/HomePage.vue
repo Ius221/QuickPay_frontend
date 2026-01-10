@@ -24,6 +24,17 @@ import fastMoney from '@/components/assets/fastMoney.png'
 import GlassBox from '../Ui/GlassSlot.vue'
 import HeadingSlot from '../Ui/HeadingSlot.vue'
 import BtnSlot from '../Ui/BtnSlot.vue'
+import { onMounted } from 'vue'
+import api from '@/plugins/axiosConfig'
+
+onMounted(async () => {
+  try {
+    const response = await api.get('/wakeup')
+    console.log(response.data)
+  } catch (err) {
+    console.log(err)
+  }
+})
 </script>
 
 <style scoped>

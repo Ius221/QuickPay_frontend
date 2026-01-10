@@ -19,15 +19,22 @@
         :time="item.time"
       />
     </div>
-    <!-- <div class="page-no">
-      <router-link to="#" class="material-icons" id="btn">chevron_left</router-link>
-      <div class="num active">1</div>
-      <div class="num">2</div>
-      <div class="num">3</div>
-      <div class="other">...</div>
-      <div class="num">20</div>
-      <router-link to="#" class="material-icons" id="btn">chevron_right</router-link>
-    </div> -->
+    <div class="pagination" v-if="!isLoading">
+      <button @click="changePage(currPage - 1)" :disabled="pagination.isFirst" class="page-btn">
+        &laquo; prev
+      </button>
+      <button
+        v-for="page in pagination.totalPage"
+        :key="page"
+        @click="changePage(page)"
+        :class="['page-number', { active: page === currPage }]"
+      >
+        {{ page }}
+      </button>
+      <button @click="changePage(currPage + 1)" :disabled="pagination.isLast" class="page-btn">
+        Next &raquo;
+      </button>
+    </div>
   </glass-slot>
 </template>
 
@@ -35,44 +42,82 @@
 import TransactionTop from '@/components/nav/TransactionTop.vue'
 import IndvTransaction from '@/components/Ui/IndvTransaction.vue'
 import api from '@/plugins/axiosConfig'
-import { onMounted, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useUserStore } from '@/components/store/UserStore'
+import { useRoute, useRouter } from 'vue-router'
 
 const userStore = useUserStore()
 const trans = []
 const isLoading = ref(true)
+const route = useRoute()
+const router = useRouter()
+const pagination = ref({})
+const currPage = computed(() => pagination.value.pageNumber + 1)
 
-onMounted(async () => {
+const fetchTransaction = async (pageIndex = 0) => {
   try {
     const response = await api.get(
-      `show/transaction?accNo=${userStore.getAllData.accNo}&sortOrder=descending`,
+      `show/transaction?accNo=${userStore.getAllData.accNo}&sortOrder=descending&pageNumber=${pageIndex}`,
     )
 
-    // const tempObj = {
-    //   status: 'DEPOSIT',
-    //   money: 100.0,
-    //   senderName: 'Self',
-    //   senderAccNo: '1005',
-    //   time: '2026-01-08T00:04:20.780157',
-    // }
-    response.data.content.forEach((e, num) => {
-      const tempObj = {
-        id: num + 1,
-        fullName: e.senderName,
-        accNo: e.senderAccNo,
-        amount: e.money,
-        status: e.status,
-        time: e.time,
+    console.log(response.data)
+
+    if (response.status === 302) {
+      trans.length = 0
+      response.data.content.forEach((e, num) => {
+        const tempObj = {
+          id: num + 1,
+          fullName: e.status.toLowerCase() === 'send' ? e.receiverName : e.senderName,
+          accNo:
+            e.status.toLowerCase() === 'send' ? Number(e.receiverAccNo) : Number(e.senderAccNo),
+          amount: e.money,
+          status: e.status,
+          time: e.time,
+        }
+        trans.push(tempObj)
+      })
+
+      pagination.value = {
+        isFirst: response.data.isFirst,
+        isLast: response.data.isLast,
+        pageNumber: response.data.pageNumber,
+        pageSize: response.data.pageSize,
+        totalElement: response.data.totalElement,
+        totalPage: response.data.totalPage,
       }
-      trans.push(tempObj)
-      console.log(tempObj)
-    })
+    } else {
+      console.log(Failed)
+    }
   } catch (err) {
     console.log(err)
   } finally {
     isLoading.value = false
   }
-})
+}
+
+// onMounted(fetchTransaction)
+
+const changePage = (newPage) => {
+  if (newPage < 1 || newPage > pagination.value.totalPage) return
+
+  router.push({
+    query: {
+      ...route.query,
+      page: newPage,
+    },
+  })
+}
+
+watch(
+  () => route.query.page,
+  (newPageFromUrl) => {
+    const page = parseInt(newPageFromUrl) || 1
+
+    const apiPageIndex = page - 1
+    fetchTransaction(apiPageIndex)
+  },
+  { immediate: true },
+)
 </script>
 
 <style scoped>
@@ -85,49 +130,35 @@ onMounted(async () => {
   overflow: hidden;
   border-radius: 12px;
 }
-/*
-.page-no {
+.pagination {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2.4rem;
-  gap: 2rem;
-  margin-top: 3rem;
+  gap: 8px;
+  margin-top: 20px;
 }
-.other,
-.num {
-  border: 1px solid #3333;
-  height: 5rem;
-  width: 5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #9997;
-  border-radius: 8px;
-  transition: all 0.3s;
-  color: #999;
-}
-.other {
-  background-color: transparent;
-  border: none;
-}
-.active {
-  border-color: #fff5;
-  background-color: #9999;
-  color: #fff;
-}
-#btn {
-  font-size: 4.2rem;
-  color: #cccc;
+
+.page-btn {
+  padding: 5px 10px;
   cursor: pointer;
-  transition: all 0.3s;
-  background-color: transparent;
-  text-decoration: none;
 }
-#btn:hover {
-  color: #fff;
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
-  */
+
+.page-number {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+.page-number.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+  font-weight: bold;
+}
 
 /* Loading  */
 .waiting {
