@@ -62,7 +62,7 @@ const userStore = useUserStore()
 const formSubmit = async () => {
   isLoading.value = true
   if (!username.value || !pass.value) alert('Add Values!!!')
-  await fetch('http://localhost:8080/api/v2/auth/signup', {
+  await fetch('https://quickpay-backend-3oky.onrender.com/api/v2/auth/signup', {
     method: 'POST',
     body: JSON.stringify({
       username: username.value,
