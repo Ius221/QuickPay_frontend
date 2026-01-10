@@ -45,6 +45,7 @@ import api from '@/plugins/axiosConfig'
 import { computed, ref, watch } from 'vue'
 import { useUserStore } from '@/components/store/UserStore'
 import { useRoute, useRouter } from 'vue-router'
+import { toast } from 'vue3-toastify'
 
 const userStore = useUserStore()
 const trans = []
@@ -59,8 +60,6 @@ const fetchTransaction = async (pageIndex = 0) => {
     const response = await api.get(
       `show/transaction?accNo=${userStore.getAllData.accNo}&sortOrder=descending&pageNumber=${pageIndex}`,
     )
-
-    console.log(response.data)
 
     if (response.status === 302) {
       trans.length = 0
@@ -77,6 +76,8 @@ const fetchTransaction = async (pageIndex = 0) => {
         trans.push(tempObj)
       })
 
+      console.log(response.data)
+
       pagination.value = {
         isFirst: response.data.isFirst,
         isLast: response.data.isLast,
@@ -86,7 +87,12 @@ const fetchTransaction = async (pageIndex = 0) => {
         totalPage: response.data.totalPage,
       }
     } else {
-      console.log(Failed)
+      toast('Please logout and Login again', {
+        theme: 'auto',
+        type: 'error',
+        autoClose: 3000,
+        dangerouslyHTMLString: true,
+      })
     }
   } catch (err) {
     console.log(err)
@@ -95,9 +101,8 @@ const fetchTransaction = async (pageIndex = 0) => {
   }
 }
 
-// onMounted(fetchTransaction)
-
 const changePage = (newPage) => {
+  isLoading.value = true
   if (newPage < 1 || newPage > pagination.value.totalPage) return
 
   router.push({
@@ -134,11 +139,17 @@ watch(
   display: flex;
   gap: 8px;
   margin-top: 20px;
+  justify-content: center;
 }
 
 .page-btn {
   padding: 5px 10px;
   cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  font-family: inherit;
+  /* font-size: 1.2rem; */
+  background-color: #aaaa;
 }
 
 .page-btn:disabled {
@@ -148,16 +159,23 @@ watch(
 
 .page-number {
   padding: 5px 10px;
-  border: 1px solid #ccc;
-  background: white;
   cursor: pointer;
+  background-color: #cccc;
+  color: #666;
+  border: none;
+  border-radius: 4px;
+  transition: all 0.3s;
 }
-
+.page-number:hover {
+  color: #333;
+  background-color: rgba(204, 204, 204, 0.9);
+}
 .page-number.active {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
+  background-color: #ccc;
+  color: #333;
   font-weight: bold;
+
+  box-shadow: 2px 2px 4px #333;
 }
 
 /* Loading  */

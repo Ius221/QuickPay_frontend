@@ -7,7 +7,7 @@
         >Wallet</router-link
       >
       <router-link to="/transfer">Transfer</router-link>
-      <router-link to="/transactions">Transactions</router-link>
+      <router-link to="/transactions?page=1">Transactions</router-link>
     </div>
     <button class="logout" @click="logoutMe">Logout</button>
   </div>
