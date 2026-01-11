@@ -49,7 +49,7 @@ const userStore = useUserStore()
 const formSubmit = async () => {
   isLoading.value = true
   if (!email.value || !pass.value) return
-  await fetch('http://localhost:8080/api/v2/auth/login', {
+  await fetch('https://quickpay-backend-3oky.onrender.com/api/v2/auth/login', {
     method: 'POST',
     body: JSON.stringify({
       email: email.value,

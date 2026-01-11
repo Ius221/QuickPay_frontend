@@ -76,8 +76,6 @@ const fetchTransaction = async (pageIndex = 0) => {
         trans.push(tempObj)
       })
 
-      console.log(response.data)
-
       pagination.value = {
         isFirst: response.data.isFirst,
         isLast: response.data.isLast,
